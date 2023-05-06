@@ -856,4 +856,10 @@ components:
         'Set to "relink-account" to start Ignition session to re-authenticate
         user. Must also provide `account`. '
   responses: {}
-  securitySchemes: {}
+  securitySchemes: 
+   apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X_API_KEY
+      description: API key based authentication
+              
