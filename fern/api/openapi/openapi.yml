@@ -96,7 +96,6 @@ paths:
       summary: Exchange Token
       description: |-
         Exchange an authorization code for an access token. Ignition returns an authCode as a query parameter at the redirectUrl upon successful completion of the Ignition flow.
-
         Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.
       operationId: ExchangeToken
       parameters:
@@ -168,6 +167,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/x-client-id"
         - $ref: "#/components/parameters/x-client-secret"
+        - $ref: "#/components/parameters/x-access-token"
         - $ref: "#/components/parameters/expand"
       responses:
         "200":
@@ -184,8 +184,6 @@ paths:
       deprecated: false
       tags:
         - Accounts
-      security:
-        - apiKeyAuth: []
     parameters:
       - $ref: "#/components/parameters/account"
   /policies/{id}:
@@ -199,6 +197,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/x-client-id"
         - $ref: "#/components/parameters/x-client-secret"
+        - $ref: "#/components/parameters/x-access-token"
         - $ref: "#/components/parameters/expand"
       responses:
         "200":
@@ -215,8 +214,6 @@ paths:
       deprecated: false
       tags:
         - Policies
-      security:
-        - apiKeyAuth: []
     parameters:
       - $ref: "#/components/parameters/policy"
   /carriers/{id}:
@@ -807,6 +804,15 @@ components:
       description:
         The unique ID for the requested account. Returned as part of the Token
         Exchange flow in exchangeToken.
+    x-access-token:
+      name: x-access-token
+      in: header
+      required: true
+      schema:
+        type: string
+      description:
+        The access token required for access to the requested user’s Account.
+        Returned as part of the Token Exchange flow in exchangeToken.
     policy:
       name: id
       in: path
@@ -851,9 +857,3 @@ components:
         'Set to "relink-account" to start Ignition session to re-authenticate
         user. Must also provide `account`. '
   responses: {}
-  securitySchemes: 
-   apiKeyAuth:
-      type: apiKey
-      in: header
-      name: x-access-token
-              
