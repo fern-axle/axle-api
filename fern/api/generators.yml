@@ -2,10 +2,12 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.2.2
+        version: 0.5.18
         output:
           location: npm
           package-name: '@fern-api/axle'
           token: ${FERN_NPM_TOKEN}
         github:
           repository: fern-axle/axle-node
+        config: 
+          namespaceExport: Axle
