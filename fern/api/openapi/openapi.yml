@@ -7,8 +7,10 @@ servers:
   - url: "https://api.axle.insure"
     variables: {}
     description: Production
+    x-fern-server-name: Production
   - description: Sandbox
     url: "https://sandbox.axle.insure"
+    x-fern-server-name: Sandbox
 paths:
   /ignition:
     post:
@@ -166,7 +168,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/x-client-id"
         - $ref: "#/components/parameters/x-client-secret"
-        - $ref: "#/components/parameters/x-access-token"
         - $ref: "#/components/parameters/expand"
       responses:
         "200":
@@ -183,6 +184,8 @@ paths:
       deprecated: false
       tags:
         - Accounts
+      security:
+        - apiKeyAuth: []
     parameters:
       - $ref: "#/components/parameters/account"
   /policies/{id}:
@@ -196,7 +199,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/x-client-id"
         - $ref: "#/components/parameters/x-client-secret"
-        - $ref: "#/components/parameters/x-access-token"
         - $ref: "#/components/parameters/expand"
       responses:
         "200":
@@ -213,6 +215,8 @@ paths:
       deprecated: false
       tags:
         - Policies
+      security:
+        - apiKeyAuth: []
     parameters:
       - $ref: "#/components/parameters/policy"
   /carriers/{id}:
@@ -803,15 +807,6 @@ components:
       description:
         The unique ID for the requested account. Returned as part of the Token
         Exchange flow in exchangeToken.
-    x-access-token:
-      name: x-access-token
-      in: header
-      required: true
-      schema:
-        type: string
-      description:
-        The access token required for access to the requested user’s Account.
-        Returned as part of the Token Exchange flow in exchangeToken.
     policy:
       name: id
       in: path
@@ -860,6 +855,5 @@ components:
    apiKeyAuth:
       type: apiKey
       in: header
-      name: X_API_KEY
-      description: API key based authentication
+      name: x-access-token
               
